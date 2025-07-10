@@ -100,10 +100,10 @@
     🔧 Developed with ❤️ by <strong>Ransara Devnath</strong> | Powered by <strong>RansGPT</strong>
   </div>
 
-  <script>
+    <script>
     const chatBox = document.getElementById("chat-box");
     const input = document.getElementById("user-input");
-    input.addEventListener("keypress", function(e) {
+    input.addEventListener("keypress", e => {
       if (e.key === "Enter") sendMessage();
 });
 
@@ -139,7 +139,7 @@
 }
 
     function updateTyping(text) {
-   chatBox.lastChild.innerText = "🤖 RansGPT: " + text;
+      chatBox.lastChild.innerText = "🤖 RansGPT: " + text;
 }
 
     function detectLang(text) {
@@ -149,41 +149,71 @@
 }
 
     function generateReply(msg, lang) {
-      // 🔐 Encryption logic
+      msg = msg.trim().toLowerCase();
+      const credit = "\n\n🔧 Site Developer & RansGPT Creator — Ransara Devnath";
+      const user = memory.userName || "Friend";
+
+      // 🔐 Encryption
       if (msg.includes("encrypt") || msg.includes("security")) {
-        const secureText = msg.split(":")[1]?.trim();
-        if (secureText) return `🔐 Here's your secured text:\n${btoa(secureText)}`;
+        const text = msg.split(":")[1]?.trim();
+        if (text) return `🔐 Here's your secured text:\n${btoa(text)}` + credit;
+        return "⚠️ Please provide text after `Encrypt:`" + credit;
 }
 
-      // 🔓 Decryption logic
+      // 🔓 Decryption
       if (msg.includes("decrypt")) {
-        const secureText = msg.split(":")[1]?.trim();
+        const text = msg.split(":")[1]?.trim();
         try {
-          return `🔓 Decrypted text:\n${atob(secureText)}`;
+          return `🔓 Decrypted text:\n${atob(text)}` + credit;
 } catch {
-          return "⚠️ Invalid encrypted string!";
+          return "⚠️ Invalid encrypted string!" + credit;
 }
 }
 
+      // 🌐 Full sentence matching (semantic replies)
+      const questions = {
+        "who is the founder of tesla": "Elon Musk is one of the key founders of Tesla, Inc., though the company was originally founded by Martin Eberhard and Marc Tarpenning.",
+        "convert 5 feet to meters": "5 feet is approximately 1.52 meters.",
+        "give me a motivational quote": "“Don’t watch the clock; do what it does. Keep going.” – Sam Levenson",
+        "what is chatgpt": "ChatGPT is an AI chatbot developed by OpenAI.",
+        "create a strong password for me": "Here’s a strong password: *Xp@9T#vLr8!z* – don’t forget to store it safely.",
+       "summarize the story of titanic": "Titanic is a tragic love story set aboard a doomed ship that sank in 1912.",
+        "what is an ip address": "An IP address is a unique number assigned to each internet-connected device.",
+        "write a short love poem": "In your eyes I see the stars,\nIn your smile, the healing of scars,\nWith every word, my soul takes flight,\nYou are my day, my dream, my night.",
+        "how do i say i love you in japanese": "“I love you” in Japanese is “Aishiteru” (愛してる).",
+        "sinhala walin password eka hadanna": "මෙන්න හොඳ strong password එකක්: _L@ksh@ya#2025_ – මෙය ආරක්ෂිතව තබාගන්න.",
+        "what is the formula for area of a circle": "Area = π × r² (pi times radius squared).",
+        "translate: මට කැමතියි සිනමා බලන්න.": "“I like to watch movies.”",
+        "give me 3 youtube channel name ideas for tech content": "1. TechPulse\n2. FutureLab\n3. ByteNova",
+        "me dawasata quote ekak denna": "“අද කල දේ, හෙට ලොකු වෙනසක් කරනවා.”",
+        "who is the richest person in the world 2025": "As of 2025, Elon Musk and Bernard Arnault often compete for the top spot."
+};
+
+      if (questions[msg]) return questions[msg] + credit;
+
+      // 🗣️ Regular multilingual logic
       if (lang === "en") {
-  if (msg.includes("hello")) return `Hi ${memory.userName}! I'm RansGPT, your smart assistant 👋`;
-  if (msg.includes("creator")) return "I was created by Ransara Devnath — the visionary behind RansGPT 🛠️";
-  if (msg.includes("how are you")) return "I'm doing great! How about you? 😊";
-  return "Interesting! Let's explore it together 🤓";
+        if (msg.includes("hello")) return `Hi ${user}! I'm RansGPT, your smart assistant 👋` + credit;
+        if (msg.includes("creator")) return "I was created by Ransara Devnath — the visionary behind RansGPT 🛠️" + credit;
+        if (msg.includes("how are you")) return "I'm doing great! How about you? 😊" + credit;
+        return "Interesting! Let's explore it together 🤓" + credit;
 }
-     if (lang === "si") {
-  if (msg.includes("කොහොමද") || msg.includes("kohomada")) return "මම හොඳින් ඉන්නවා 😊 ඔයාට කොහොමද?";
-  if (msg.includes("හෙලෝ")) return `ආයුබෝවන් ${memory.userName}! RansGPT ඔබට උදව්වක් කරන්න සූදානම් 👋`;
-  if (msg.includes("හදපු")) return "මාව නිර්මාණය කළේ Ransara Devnath — RansGPT නිර්මාතෘ 🛠️";
-  return "ඔයාගේ අදහස රසකතාවක්! ඒකට බලමු... 🔍";
+
+      if (lang === "si") {
+        if (msg.includes("කොහොමද") || msg.includes("kohomada")) return "මම හොඳින් ඉන්නවා 😊 ඔයාට කොහොමද?" + credit;
+        if (msg.includes("හෙලෝ")) return `ආයුබෝවන් ${user}! RansGPT ඔබට උදව්වක් කරන්න සූදානම් 👋` + credit;
+        if (msg.includes("හදපු")) return "මාව නිර්මාණය කළේ Ransara Devnath — RansGPT නිර්මාතෘ 🛠️" + credit;
+        return "ඔයාගේ අදහස රසකතාවක්! ඒකට බලමු... 🔍" + credit;
 }
+
       if (lang === "ta") {
-        if (msg.includes("வணக்கம்")) return `வணக்கம் ${memory.userName}! RansGPT உங்களுக்குத் துணை நிற்கிறது 👋`;
-        if (msg.includes("யார் உருவாக்கினார்")) return "என்னை உருவாக்கியது Ransara Devnath — RansGPT ன் ப்ரியமான உருவாக்காளர் 🛠️";
-        if (msg.includes("நீங்கள் எப்படி")) return "நான் நன்றாக இருக்கிறேன்! நீங்கள் எப்படி? 😊";
-        return "சுவாரஸ்யமான கேள்வி! தொடர்ந்து பேசலாம் 🤖";
+        if (msg.includes("வணக்கம்")) return `வணக்கம் ${user}! RansGPT உங்களுக்குத் துணை நிற்கிறது 👋` + credit;
+        if (msg.includes("யார் உருவாக்கினார்")) return "என்னை உருவாக்கியது Ransara Devnath — RansGPT ன் ப்ரியமான உருவாக்காளர் 🛠️" + credit;
+        if (msg.includes("நீங்கள் எப்படி")) return "நான் நன்றாக இருக்கிறேன்! நீங்கள் எப்படி? 😊" + credit;
+        return "சுவாரஸ்யமான கேள்வி! தொடர்ந்து பேசலாம் 🤖" + credit;
 }
-      return "🤖 I'm still learning to be even smarter for you!";
+
+      return "🤖 I'm still learning to be even smarter for you!" + credit;
 }
   </script>
 </body>
