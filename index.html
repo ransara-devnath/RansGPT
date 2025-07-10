@@ -101,7 +101,7 @@
   </div>
 
   <script>
-    const input = document.getElementById("user-input");
+   const input = document.getElementById("user-input");
     const chatBox = document.getElementById("chat-box");
 
     input.addEventListener("keypress", e => {
@@ -193,7 +193,10 @@
                "Hello there! 😊 I was created by Ransara Devnath 🛠️" + credit;
 }
 
-"You seem down. I'm here to support you 🤗";
+      if (intents.includes("emotion") && intents.includes("help")) {
+        return lang === "si"? "ඔබ තනිකඩයි කියලා මට තේරෙන්නෙ. මම ඔබට මිතුරෙකු වන්නම් 🤗":
+               lang === "ta"? "நீங்கள் தனிமையாக இருக்கின்றீர்கள் போல் தெரிகிறது. நான் உங்கள் தோழன் 🤗":
+               "You seem down. I'm here to support you 🤗";
 }
 
       // Default fallback reply
