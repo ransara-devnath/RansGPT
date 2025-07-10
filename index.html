@@ -93,7 +93,7 @@
   <img src="https://raw.githubusercontent.com/ransara-devnath/Sonic-Ceylon-Official-/refs/heads/main/IMG-20250710-WA0023.jpg" alt="Avatar" class="avatar" />
   <div id="chat-box"></div>
   <div id="input-area">
-    <input type="text" id="user-input" placeholder="Type your message..." />
+    <input type="text" id="user-input" placeholder="Ask me anything... 🤖✨" />
     <button onclick="sendMessage()">Send</button>
   </div>
   <div id="footer">
@@ -133,7 +133,7 @@
     function showTyping() {
       const msgDiv = document.createElement("div");
       msgDiv.className = "message bot";
-      msgDiv.innerText = "🤖 RansGPT is thinking...";
+      msgDiv.innerText = "Thinking deeply 🤔 Please wait...⏳";
       chatBox.appendChild(msgDiv);
       chatBox.scrollTop = chatBox.scrollHeight;
 }
