@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RansGPT - AI Chat</title>
+  <style>
+    body {
+      background-color: #1e1e2e;
+      color: #cdd6f4;
+      font-family: "Segoe UI", sans-serif;
+      padding: 20px;
+      margin: 0;
+}
+    h2 {
+      color: #89b4fa;
+      text-align: center;
+      margin-bottom: 10px;
+}
+    #language-select {
+      background: #313244;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+}
+    #chat-box {
+      background: #181825;
+      border: 1px solid #313244;
+      border-radius: 8px;
+      height: 350px;
+      overflow-y: auto;
+      padding: 10px;
+      margin-bottom: 10px;
+}
+.message {
+      margin: 6px 0;
+      padding: 5px;
+}
+.user {
+      color: #f38ba8;
+}
+.bot {
+      color: #a6e3a1;
+}
+    #input-area {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+}
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      background: #313244;
+      color: white;
+}
+    button {
+      padding: 10px 15px;
+      background-color: #89b4fa;
+      color: #1e1e2e;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+}
+    button:hover {
+      background-color: #74c7ec;
+}
+    #footer {
+      text-align: center;
+      color: #6c7086;
+      margin-top: 20px;
+      font-size: 14px;
+}
+  </style>
+</head>
+<body>
+  <h2>🤖 Welcome to RansGPT</h2>
+  <center>
+    <select id="language-select">
+      <option value="en">🇬🇧 English</option>
+      <option value="si">🇱🇰 Sinhala</option>
+      <option value="ta">🇮🇳 Tamil</option>
+    </select>
+  </center>
+
+  <div id="chat-box"></div>
+
+  <div id="input-area">
+    <input type="text" id="user-input" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <div id="footer">
+    🔧 Developed with ❤️ by <strong>Ransara Devnath</strong> | Powered by <strong>RansGPT</strong>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chat-box");
+    const input = document.getElementById("user-input");
+    const langSelect = document.getElementById("language-select");
+    let memory = { userName: "Ransara", preferredLang: "en"};
+
+    function sendMessage() {
+      const userMsg = input.value.trim();
+      if (!userMsg) return;
+      const lang = langSelect.value;
+      memory.preferredLang = lang;
+      appendMessage("user", userMsg);
+      input.value = "";
+      const botReply = generateReply(userMsg.toLowerCase(), lang);
+      setTimeout(() => {
+        appendMessage("bot", botReply);
+}, 600);
+}
+
+    function appendMessage(sender, text) {
+      const msgDiv = document.createElement("div");
+      msgDiv.className = "message " + sender;
+      msgDiv.innerText = (sender === "user"? "🧑‍💻 You: ": "🤖 RansGPT: ") + text;
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+    function generateReply(msg, lang) {
+      const intent = getIntent(msg);
+      if (lang === "en") {
+        if (intent === "greeting") return `Hi ${memory.userName}! I'm RansGPT, your smart assistant.`;
+        if (intent === "creator") return "I was created by Ransara Devnath — the visionary behind RansGPT!";
+        if (intent === "plan") return "Let me help you break it down into a smart plan. Step 1...";
+        return "That's really interesting. Let's explore that further! 🤔";
+}
+if (lang === "si") {
+        if (intent === "greeting") return `ආයුබෝවන් ${memory.userName}! මම RansGPT, ඔබේ බුද්ධිමත් මිතුරා!`;
+        if (intent === "creator") return "මාව හදලා තියෙන්නේ Ransara Devnath — RansGPT එකට ප්‍රාණය දුන් අයියා!";
+        if (intent === "plan") return "ඔයාගේ වැඩ ටික plan කරමු. පියවර 1...";
+        return "මගේ බුද්ධිය තවම පුහුණු වෙමින් පවතිනවා. ඒකට බැලිය හැකියි! 🧠";
+}
+      if (lang === "ta") {
+        if (intent === "greeting") return `வணக்கம் ${memory.userName}! நான் உங்கள் RansGPT உதவியாளர்!`;
+        if (intent === "creator") return "என்னை உருவாக்கியது Ransara Devnath — RansGPTவின் புலமை!";
+        if (intent === "plan") return "உங்கள் பணிகளை திட்டமிடுவோம். படி 1...";
+        return "அது சுவாரஸ்யமாக இருக்கிறது. மேலும் பார்ப்போம்! 🤖";
+}
+      return "🤖 I'm still learning to be smarter in your language!";
+}
+
+    function getIntent(msg) {
+      if (msg.includes("hello") || msg.includes("hi") || msg.includes("හෙලෝ") || msg.includes("வணக்கம்")) return "greeting";
+      if (msg.includes("creator") || msg.includes("who made you") || msg.includes("හදපු") || msg.includes("யார் உருவாக்கினார்")) return "creator";
+      if (msg.includes("plan") || msg.includes("task") || msg.includes("කාර්ය") || msg.includes("திட்டம்")) return "plan";
+      return "general";
+}
+  </script>
+</body>
+</html>
