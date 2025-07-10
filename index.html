@@ -122,11 +122,11 @@
 }
 
     function appendMessage(sender, text) {
-      const msgDiv = document.createElement("div");
+    const msgDiv = document.createElement("div");
       msgDiv.className = "message " + sender;
       msgDiv.innerText = (sender === "user"? "🧑‍💻 You: ": "🤖 RansGPT: ") + text;
       chatBox.appendChild(msgDiv);
-     chatBox.scrollTop = chatBox.scrollHeight;
+      chatBox.scrollTop = chatBox.scrollHeight;
 }
 
     function showTyping() {
@@ -150,19 +150,19 @@
     function getIntents(msg) {
       const t = msg.toLowerCase();
       const match = [];
-      const creator = ["creator", "who made", "හදපු", "හැදුවේ", "නිර්මාණය", "உருவாக்கினார்"];
-      const help = ["help", "support", "උදව්", "உதவி"];
-      const greet = ["hello", "hi", "හෙලෝ", "වන්දනාවක්", "வணக்கம்"];
-      const mood = ["sad", "alone", "depression", "duka", "තනිකඩ", "lonely", "அவசம்"];
-      const plan = ["plan", "tasks", "travel", "කාර්ය", "දිනදසුන", "திட்டம்"];
+      const creator = ["creator", "who made", "who built", "හදපු", "නිර්මාණය", "உருவாக்கினார்"];
+      const greet = ["hi", "hello", "kohomada", "හෙලෝ", "වන්දනාවක්", "வணக்கம்"];
+      const nameQ = ["your name", "who are you", "name", "nama", "name කියන්න", "உங்கள் பெயர்"];
+      const help = ["help", "can you help", "support", "assist", "උදව්"];
+      const mood = ["sad", "lonely", "alone", "duka", "තනිකඩ", "depression"];
       const encrypt = ["encrypt", "security"];
       const decrypt = ["decrypt"];
 
       if (creator.some(w => t.includes(w))) match.push("creator");
-      if (help.some(w => t.includes(w))) match.push("help");
       if (greet.some(w => t.includes(w))) match.push("greet");
+      if (nameQ.some(w => t.includes(w))) match.push("name");
+      if (help.some(w => t.includes(w))) match.push("help");
       if (mood.some(w => t.includes(w))) match.push("emotion");
-      if (plan.some(w => t.includes(w))) match.push("planning");
       if (encrypt.some(w => t.includes(w))) match.push("encrypt");
       if (decrypt.some(w => t.includes(w))) match.push("decrypt");
 
@@ -171,28 +171,29 @@
 
     function generateReply(msg, lang) {
       const intents = getIntents(msg);
+      const credit = "\n\n🔧 Site Developer & RansGPT Creator — Ransara Devnath";
 
       if (intents.includes("encrypt")) {
         const secure = msg.split(":")[1]?.trim();
-        return secure? `🔐 Secured text:\n${btoa(secure)}`: "⚠️ Please enter text after `Encrypt:`";
+        return secure? `🔐 Secured text:\n${btoa(secure)}` + credit: "⚠️ Please enter text after `Encrypt:`" + credit;
 }
 
       if (intents.includes("decrypt")) {
         const decode = msg.split(":")[1]?.trim();
-        try { return `🔓 Decrypted text:\n${atob(decode)}`;}
-        catch { return "⚠️ Invalid encoded string.";}
+        try {
+          return `🔓 Decrypted text:\n${atob(decode)}` + credit;
+} catch {
+          return "⚠️ Invalid encrypted string." + credit;
+}
 }
 
       if (intents.includes("greet") && intents.includes("creator")) {
-        return lang === "si"? "ආයුබෝවන්! 😊\nමාව හැදුවේ Ransara Devnath 🛠️":
-               lang === "ta"? "வணக்கம்! 😊\nஎன்னை உருவாக்கியது Ransara Devnath 🛠️":
-                               "Hi there! 😊\nI was created by Ransara Devnath 🛠️";
+        return lang === "si"? "ආයුබෝවන්! 😊 මාව හැදුවේ Ransara Devnath 🛠️" + credit:
+               lang === "ta"? "வணக்கம்! 😊 நான் உருவாக்கப்பட்டது Ransara Devnath 🛠️" + credit:
+               "Hello there! 😊 I was created by Ransara Devnath 🛠️" + credit;
 }
 
-      if (intents.includes("emotion") && intents.includes("help")) {
-        return lang === "si"? "ඔබ තනිකඩයි කියලා මට තේරෙන්නෙ. මම ඔබට මිතුරෙකු වන්නම් 🤗":
-               lang === "ta"? "நீங்கள் தனிமையாக இருக்கின்றீர்கள் போல் தெரிகிறது. நான் உங்கள் தோழன் 🤗":
-               "You seem down. I'm here to support you 🤗";
+"You seem down. I'm here to support you 🤗";
 }
 
       // Default fallback reply
