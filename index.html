@@ -90,7 +90,7 @@
 </head>
 <body>
   <h2>🤖 Welcome to RansGPT</h2>
-  <img src="https://raw.githubusercontent.com/ransara-devnath/Sonic-Ceylon-Official-/refs/heads/main/IMG-20250710-WA0023.jpg" alt="Avatar" class="avatar" />
+  <img src="https://raw.githubusercontent.com/ransara-devnath/RansGPT/refs/heads/main/IMG-20250710-WA0040.jpg" alt="Avatar" class="avatar" />
   <div id="chat-box"></div>
   <div id="input-area">
     <input type="text" id="user-input" placeholder="Ask me anything... 🤖✨" />
@@ -125,7 +125,10 @@
     function appendMessage(sender, text) {
       const msgDiv = document.createElement("div");
       msgDiv.className = "message " + sender;
-      msgDiv.innerText = (sender === "user"? "🧑‍💻 You: ": "🤖 RansGPT: ") + text;
+      msgDiv.innerHTML =
+  sender === "user"
+? "🧑‍💻 You: " + text
+: `<img src="https://raw.githubusercontent.com/ransara-devnath/RansGPT/refs/heads/main/IMG-20250710-WA0040.jpg" style="width:20px; height:20px; border-radius:50%; vertical-align:middle; margin-right:5px;" /> RansGPT: ` + text;
       chatBox.appendChild(msgDiv);
       chatBox.scrollTop = chatBox.scrollHeight;
 }
