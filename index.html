@@ -17,6 +17,14 @@
       color: #89b4fa;
       margin-bottom: 10px;
 }
+    img.avatar {
+      width: 100px;
+      border-radius: 50%;
+      box-shadow: 0 0 20px #8b5cf6;
+      animation: pulseGlow 2s infinite, floatUpDown 3s ease-in-out infinite;
+      display: block;
+      margin: 0 auto 10px;
+}
     #chat-box {
       background: #181825;
       border: 1px solid #313244;
@@ -32,65 +40,57 @@
       padding: 5px;
       word-break: break-word;
 }
-.user {
-      color: #f38ba8;
-}
-.bot {
-      color: #a6e3a1;
-}
+.user { color: #f38ba8;}
+.bot  { color: #a6e3a1;}
     #input-area {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
 }
-    input[type="text"] {
-      flex-grow: 1;
+    input[type="text"], button {
       padding: 10px;
       border-radius: 6px;
       border: none;
-      background: #313244;
-      color: white;
       font-size: 16px;
 }
+    input {
+      flex-grow: 1;
+      background: #313244;
+      color: white;
+}
     button {
-      padding: 10px 15px;
       background-color: #89b4fa;
       color: #1e1e2e;
       font-weight: bold;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
       box-shadow: 0 0 8px #8b5cf6;
+      cursor: pointer;
 }
-    button:hover {
-      background-color: #74c7ec;
-}
+    button:hover { background-color: #74c7ec;}
     #footer {
       text-align: center;
       color: #b3b9d4;
       margin-top: 20px;
       font-size: 14px;
 }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 5px #8b5cf6;}
+      50%      { box-shadow: 0 0 25px #8b5cf6;}
+}
+    @keyframes floatUpDown {
+      0%, 100% { transform: translateY(0);}
+      50%      { transform: translateY(-5px);}
+}
     @media screen and (max-width: 600px) {
-      body {
-        padding: 10px;
-}
-      #chat-box {
-        height: 250px;
-        font-size: 14px;
-}
-      input, button {
-        font-size: 14px;
-        width: 100%;
-}
-      #input-area {
-        flex-direction: column;
-}
+      body { padding: 10px;}
+      #chat-box { height: 250px; font-size: 14px;}
+      input, button { width: 100%; font-size: 14px;}
+      #input-area { flex-direction: column;}
 }
   </style>
 </head>
 <body>
   <h2>🤖 Welcome to RansGPT</h2>
+  <img src="https://raw.githubusercontent.com/ransara-devnath/Sonic-Ceylon-Official-/refs/heads/main/IMG-20250710-WA0023.jpg" alt="Avatar" class="avatar" />
   <div id="chat-box"></div>
   <div id="input-area">
     <input type="text" id="user-input" placeholder="Type your message..." />
@@ -163,19 +163,64 @@
 } catch {
           return "⚠️ Invalid encrypted string!";
 }
+// 🔹 Founder of Tesla
+if (msg.includes("Who founded Tesla?")) return "Elon Musk is one of the key founders of Tesla, Inc., though the company was originally founded by Martin Eberhard and Marc Tarpenning.";
+
+// 🔹 Convert 5 feet
+if (msg.includes("five feet is How much?")) return "5 feet is approximately 1.52 meters.";
+
+// 🔹 Motivational quote
+if (msg.includes("Give me a good thought for today.")) return "“Don’t watch the clock; do what it does. Keep going.” – Sam Levenson";
+
+// 🔹 What is ChatGPT?
+if (msg.includes("What is chatgpt?")) return "ChatGPT is an AI chatbot developed by OpenAI. It can understand and respond to human language in a conversational way.";
+
+// 🔹 Strong password
+if (msg.includes("Give me a good strong password.")) return "Here’s a strong password: *Xp@9T#vLr8!z* – don’t forget to store it safely.";
+
+// 🔹 Titanic summary
+if (msg.includes("story of titanic")) return "Titanic is a tragic love story set aboard a doomed ship that sank in 1912 after hitting an iceberg.";
+
+// 🔹 IP address
+if (msg.includes("ip address")) return "An IP address is a unique number assigned to each device connected to the internet. It identifies and communicates between devices.";
+
+// 🔹 Short love poem
+if (msg.includes("love poem")) return "In your eyes I see the stars,\nIn your smile, the healing of scars,\nWith every word, my soul takes flight,\nYou are my day, my dream, my night.";
+
+// 🔹 Japanese love
+if (msg.includes("i love you in japanese")) return "“I love you” in Japanese is “Aishiteru” (愛してる).";
+
+// 🔹 Sinhala password
+if (msg.includes("password") && lang === "si") return "මෙන්න හොඳ strong password එකක්: *L@ksh@ya#2025* – මෙය ආරක්ෂිතව තබාගන්න.";
+
+// 🔹 Area of a circle
+if (msg.includes("area of a circle")) return "Area = π × r² (pi times radius squared).";
+
+// 🔹 Sinhala to English
+if (msg.includes("මට කැමතියි සිනමා බලන්න")) return "“I like to watch movies.”";
+
+// 🔹 Tech YouTube ideas
+if (msg.includes("youtube channel") && msg.includes("tech")) return "Here are 3 ideas:\n1. TechPulse\n2. FutureLab\n3. ByteNova";
+
+// 🔹 Sinhala quote
+if (msg.includes("me dawasata quote")) return "“අද කල දේ, හෙට ලොකු වෙනසක් කරනවා.”";
+
+// 🔹 Richest person 2025
+if (msg.includes("richest person") && msg.includes("2025")) return "As of 2025, Elon Musk and Bernard Arnault often compete for the top spot.";
+}
 }
 
       if (lang === "en") {
-        if (msg.includes("hello")) return `Hi ${memory.userName}! I'm RansGPT, your smart assistant 👋`;
-        if (msg.includes("creator")) return "I was created by Ransara Devnath — the visionary behind RansGPT 🛠️";
-        if (msg.includes("how are you")) return "I'm doing great! How about you? 😊";
-        return "Interesting! Let's explore it together 🤓";
+  if (msg.includes("hello")) return `Hi ${memory.userName}! I'm RansGPT, your smart assistant 👋`;
+  if (msg.includes("creator")) return "I was created by Ransara Devnath — the visionary behind RansGPT 🛠️";
+  if (msg.includes("how are you")) return "I'm doing great! How about you? 😊";
+  return "Interesting! Let's explore it together 🤓";
 }
-      if (lang === "si") {
-        if (msg.includes("කොහොමද") || msg.includes("kohomada")) return "මම හොඳින්. ඔබට කොහොමද 😊";
-        if (msg.includes("හෙලෝ")) return `ආයුබෝවන් ${memory.userName}! RansGPT ඔබට උදව්වක් කරන්න සූදානම් 👋`;
-        if (msg.includes("හදපු")) return "මාව නිර්මාණය කළේ Ransara Devnath — RansGPT මවින් 🛠️";
-        return "ඔයාගේ අදහස රසකතාවක්! ඒකට බලමු... 🔍";
+     if (lang === "si") {
+  if (msg.includes("කොහොමද") || msg.includes("kohomada")) return "මම හොඳින් ඉන්නවා 😊 ඔයාට කොහොමද?";
+  if (msg.includes("හෙලෝ")) return `ආයුබෝවන් ${memory.userName}! RansGPT ඔබට උදව්වක් කරන්න සූදානම් 👋`;
+  if (msg.includes("හදපු")) return "මාව නිර්මාණය කළේ Ransara Devnath — RansGPT නිර්මාතෘ 🛠️";
+  return "ඔයාගේ අදහස රසකතාවක්! ඒකට බලමු... 🔍";
 }
       if (lang === "ta") {
         if (msg.includes("வணக்கம்")) return `வணக்கம் ${memory.userName}! RansGPT உங்களுக்குத் துணை நிற்கிறது 👋`;
